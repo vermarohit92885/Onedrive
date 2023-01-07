@@ -1,5 +1,4 @@
 import streamlit as st
-import bcrypt
 import os
 
 st.set_page_config(page_title='Onedrive',layout="wide",page_icon="https://iconarchive.com/download/i87068/graphicloads/colorful-long-shadow/Cloud.ico")
@@ -60,12 +59,9 @@ if(st.button("Show files in drive")):
         st.write(os.getcwd() + "\\" + items)
 st.sidebar.header("Admin Portal")
 id = st.sidebar.text_input(label="Username")
-password = bytes(st.sidebar.text_input(label="Password",type="password"),"utf-8")
-true_password = bytes("PassHash@2023","utf-8")
+password = st.sidebar.text_input(label="Password",type="password")
+true_password = "PassHash@2023"
 if(password and id):
-    salt = bcrypt.gensalt()
-    password = bcrypt.hashpw(password,salt)
-    true_password = bcrypt.hashpw(true_password,salt)
     with st.expander("Admin"):
         if(password == true_password):
             admin()
