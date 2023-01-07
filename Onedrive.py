@@ -27,7 +27,7 @@ def admin():
             st.write(items)
         elif(".git" in items):
             st.write(items)
-        elif(".stremlit" in items):
+        elif(".streamlit" in items):
             st.write(items)
         else:
             with open(items, "rb") as file:
@@ -47,7 +47,7 @@ def admin():
             pass
         elif (".git" in items):
             pass
-        elif (".stremlit" in items):
+        elif (".streamlit" in items):
             pass
         else:
             files.append(items)
