@@ -25,6 +25,10 @@ def admin():
     for items in os.listdir():
         if(".idea" in items):
             st.write(items)
+        elif(".git" in items):
+            st.write(items)
+        elif(".stremlit" in items):
+            st.write(items)
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
@@ -40,6 +44,10 @@ def admin():
         elif ("requirements.txt" in items):
             pass
         elif (".py" in items):
+            pass
+        elif (".git" in items):
+            pass
+        elif (".stremlit" in items):
             pass
         else:
             files.append(items)
