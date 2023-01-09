@@ -71,11 +71,13 @@ if(st.button("Show files in drive")):
         st.write(os.getcwd() + "\\" + items)
 st.sidebar.header("Admin Portal")
 id = st.sidebar.text_input(label="Username")
-password = st.sidebar.text_input(label="Password",type="password")
-true_password = "PassHash@2023"
+password = hash(st.sidebar.text_input(label="Password",type="password"))
+true_password = hash("PassHash@2023")
 if(password and id):
     with st.expander("Admin"):
         if(password == true_password):
+            st.success(password)
+            st.success(true_password)
             admin()
         else:
             st.sidebar.error("Incorrect password!")
