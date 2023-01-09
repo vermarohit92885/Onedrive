@@ -2,7 +2,7 @@ import streamlit as st
 import os
 
 st.set_page_config(page_title='Onedrive',layout="wide",page_icon="https://iconarchive.com/download/i87068/graphicloads/colorful-long-shadow/Cloud.ico")
-st.STREAMLIT_SERVER_MAX_UPLOAD_SIZE=400
+
 hide_streamlit_style = """
                 <style>
                 #MainMenu {visibility: hidden;}
