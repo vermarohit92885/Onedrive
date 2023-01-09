@@ -21,7 +21,6 @@ set_background = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown(set_background, unsafe_allow_html=True)
 def admin():
-    st.success("Successfully logged in as admin")
     for items in os.listdir():
         if(".idea" in items):
             st.write(os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)")
@@ -60,7 +59,7 @@ st.header("Onedrive")
 size = 0
 for item in os.listdir():
     size += os.stat(item).st_size / (1024 * 1024)
-st.subheader(f'{round(800 - size,1)}' + " MB remaining")
+st.subheader(f'{round(500 - size,1)}' + " MB remaining")
 st.write("---")
 file = st.file_uploader("Upload your files to drive")
 if(file):
@@ -74,10 +73,9 @@ id = st.sidebar.text_input(label="Username")
 password = hash(st.sidebar.text_input(label="Password",type="password"))
 true_password = hash("PassHash@2023")
 if(password and id):
-    with st.expander("Admin"):
-        if(password == true_password):
-            st.success(password)
-            st.success(true_password)
+    if(password == true_password):
+        st.sidebar.success("Logged in as admin")
+        with st.expander("Admin"):
             admin()
-        else:
-            st.sidebar.error("Incorrect password!")
+    else:
+        st.sidebar.error("Incorrect password")
