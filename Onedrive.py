@@ -2,7 +2,7 @@ import streamlit as st
 import os
 
 st.set_page_config(page_title='Onedrive',layout="wide",page_icon="https://iconarchive.com/download/i87068/graphicloads/colorful-long-shadow/Cloud.ico")
-
+st.STREAMLIT_SERVER_MAX_UPLOAD_SIZE=400
 hide_streamlit_style = """
                 <style>
                 #MainMenu {visibility: hidden;}
@@ -24,15 +24,15 @@ def admin():
     st.success("Successfully logged in as admin")
     for items in os.listdir():
         if(".idea" in items):
-            st.write(items)
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)")
         elif(".git" in items):
-            st.write(items)
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)")
         elif(".streamlit" in items):
-            st.write(items)
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)")
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items,
+                    label=os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -57,6 +57,10 @@ def admin():
         st.success("Deleted successully")
 
 st.header("Onedrive")
+size = 0
+for item in os.listdir():
+    size += os.stat(item).st_size / (1024 * 1024)
+st.subheader(f'{round(1024 - size,1)}' + " MB remaining")
 st.write("---")
 file = st.file_uploader("Upload your files to drive")
 if(file):
