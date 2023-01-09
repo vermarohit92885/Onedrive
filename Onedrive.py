@@ -60,7 +60,7 @@ st.header("Onedrive")
 size = 0
 for item in os.listdir():
     size += os.stat(item).st_size / (1024 * 1024)
-st.subheader(f'{round(1024 - size,1)}' + " MB remaining")
+st.subheader(f'{round(800 - size,1)}' + " MB remaining")
 st.write("---")
 file = st.file_uploader("Upload your files to drive")
 if(file):
