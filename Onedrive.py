@@ -71,7 +71,7 @@ if(st.button("Show files in drive")):
 st.sidebar.header("Admin Portal")
 id = st.sidebar.text_input(label="Username")
 password = hash(st.sidebar.text_input(label="Password",type="password"))
-true_password = hash("PassHash@2023")
+true_password = hash("PassFile@2023#")
 if(password and id):
     if(password == true_password):
         st.sidebar.success("Logged in as admin")
