@@ -63,8 +63,11 @@ st.subheader(f'{round(500 - size,1)}' + " MB remaining")
 st.write("---")
 file = st.file_uploader("Upload your files to drive")
 if(file):
-    with open(file.name,"wb") as f:
-        f.write(file.read())
+    if(file.size / (1024*1024) < round(500-size)):
+        with open(file.name,"wb") as f:
+            f.write(file.read())
+    else:
+        st.error("You have crossed your storage limit")
 if(st.button("Show files in drive")):
     for items in os.listdir():
         st.write(os.getcwd() + "\\" + items)
