@@ -40,8 +40,6 @@ def admin():
     for items in os.listdir():
         if (".idea" in items):
             pass
-        elif ("requirements.txt" in items):
-            pass
         elif (".py" in items):
             pass
         elif (".git" in items):
