@@ -23,15 +23,15 @@ st.markdown(set_background, unsafe_allow_html=True)
 def admin():
     for items in os.listdir():
         if(".idea" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
         elif(".git" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
         elif(".streamlit" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)",
+                    label=os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
