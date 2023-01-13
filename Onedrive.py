@@ -23,15 +23,15 @@ st.markdown(set_background, unsafe_allow_html=True)
 def admin():
     for items in os.listdir():
         if(".idea" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)")
         elif(".git" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)")
         elif(".streamlit" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)")
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items  + " (" + f'{os.stat(items).st_size / (1024 * 1024)}' + " MB)",
+                    label=os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / (1024 * 1024),2)}' + " MB)",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -57,11 +57,11 @@ st.header("Onedrive")
 size = 0
 for item in os.listdir():
     size += os.stat(item).st_size / (1024 * 1024)
-st.subheader(f'{round(800 - size,1)}' + " MB remaining")
+st.subheader(f'{round(820 - size,1)}' + " MB remaining")
 st.write("---")
 file = st.file_uploader("Upload your files to drive")
 if(file):
-    if(file.size / (1024*1024) < round(800-size)):
+    if(file.size / (1024*1024) < round(820-size)):
         with open(file.name,"wb") as f:
             f.write(file.read())
     else:
