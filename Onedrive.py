@@ -48,10 +48,12 @@ def admin():
             pass
         else:
             files.append(items)
-    file = st.selectbox("Choose the file you want to delete",options=files)
-    if(file != "--Select--"):
-        os.remove(file)
-        st.success("Deleted successully")
+    file = st.multiselect("Choose the file you want to delete",options=files)
+    if(file):
+        if("--Select--" not in file):
+            for element in file:
+                os.remove(element)
+                st.warning(element + " Deleted Successfully")
 
 st.header("Onedrive")
 size = 0
