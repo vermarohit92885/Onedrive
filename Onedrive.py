@@ -10,16 +10,9 @@ hide_streamlit_style = """
                 footer {visibility: hidden;}
                 </style>
                 """
-set_background = """
-                <style>
-                .stApp {
-                     background-image: url("https://static.vecteezy.com/system/resources/previews/002/091/724/non_2x/abstract-technology-background-with-big-data-internet-connection-abstract-sense-of-science-and-technology-analytics-concept-graphic-design-illustration-vector.jpg");
-                     background-size: cover;
-                }
-                </style>
-                """
+
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-st.markdown(set_background, unsafe_allow_html=True)
+
 def admin():
     for items in os.listdir():
         if(".idea" in items):
@@ -59,11 +52,11 @@ st.header("Onedrive")
 size = 0
 for item in os.listdir():
     size += os.stat(item).st_size / (1024 * 1024)
-st.subheader(f'{round(799 - size,1)}' + " MB remaining")
+st.subheader(f'{round(800 - size,2)}' + " MB remaining")
 st.write("---")
 file = st.file_uploader("Upload your files to drive")
 if(file):
-    if(file.size / (1024*1024) < round(799-size,2)):
+    if(file.size / (1024*1024) < round(800-size,2)):
         with open(file.name,"wb") as f:
             f.write(file.read())
     else:
