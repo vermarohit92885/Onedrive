@@ -42,11 +42,12 @@ def admin():
         else:
             files.append(items)
     file = st.multiselect("Choose the file you want to delete",options=files)
-    if(file):
-        if("--Select--" not in file):
-            for element in file:
-                os.remove(element)
-                st.warning(element + " Deleted Successfully")
+    if(st.button("Delete")):
+        if(file):
+            if("--Select--" not in file):
+                for element in file:
+                    os.remove(element)
+                    st.warning(element + " Deleted Successfully")
 
 st.header("Onedrive")
 size = 0
@@ -54,13 +55,17 @@ for item in os.listdir():
     size += os.stat(item).st_size / (1024 * 1024)
 st.subheader(f'{round(800 - size,2)}' + " MB remaining")
 st.write("---")
-file = st.file_uploader("Upload your files to drive")
-if(file):
-    if(file.size / (1024*1024) < round(800-size,2)):
-        with open(file.name,"wb") as f:
-            f.write(file.read())
-    else:
-        st.error("You have crossed your storage limit")
+files = st.file_uploader("Upload your files to drive",accept_multiple_files=True)
+if(files):
+    for file in files:
+        if(file.size / (1024*1024) < round(800-size,2)):
+            with open(file.name,"wb") as f:
+                f.write(file.read())
+            size += file.size / (1024*1024)
+        else:
+            st.error("You have crossed your storage limit")
+    st.write("Total Size: " + str(size))
+    st.subheader(f'{round(800 - size, 2)}' + " MB remaining")
 if(st.button("Show files in drive")):
     for items in os.listdir():
         st.write(os.getcwd() + "\\" + items)
