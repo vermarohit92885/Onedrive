@@ -1,4 +1,5 @@
 import streamlit as st
+from zipfile import ZipFile
 import os
 
 st.set_page_config(page_title='Onedrive',layout="wide",page_icon="https://iconarchive.com/download/i87068/graphicloads/colorful-long-shadow/Cloud.ico")
@@ -21,6 +22,89 @@ def admin():
             st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
         elif(".streamlit" in items):
             st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
+        elif(".mp4" in items or '.avi' in items):
+            st.write(items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
+            st.video(items)
+        elif (".mp3" in items or '.wav' in items):
+            st.write(items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+            st.audio(items)
+        elif (".jpg" in items or '.jpeg' in items or '.png' in items):
+            st.write(items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+            st.image(items)
+        elif (".txt" in items):
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
+            if(st.button("View " + items)):
+                with open(items,'r') as contents:
+                    st.code(contents.read())
+        elif (".py" in items):
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
+            if(st.button("View " + items)):
+                with open(items,'r') as contents:
+                    st.code(contents.read(),language="py")
+        elif (".java" in items):
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
+            if(st.button("View " + items)):
+                with open(items,'r') as contents:
+                    st.code(contents.read(),language="java")
+        elif (".html" in items):
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
+            if(st.button("View " + items)):
+                with open(items,'r') as contents:
+                    st.code(contents.read(),language="html")
+        elif(".zip" in items):
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
+            if(st.button("View " + items)):
+                with st.form(items):
+                    st.warning("This is a provisional view of the zip file you uploaded. There may be files that are unreadble by the system so make sure you download from the download button given above")
+                    with ZipFile(os.getcwd() + '\\' + items) as zipObj:
+                        for zipContent in zipObj.namelist():
+                            if (".mp4" in zipContent or '.avi' in zipContent):
+                                with zipObj.open(zipContent) as file:
+                                    contents = file.read()
+                                    st.video(contents)
+                            if (".mp3" in zipContent or '.wav' in zipContent):
+                                with zipObj.open(zipContent) as file:
+                                    contents = file.read()
+                                    st.audio(contents)
+                            if (".jpg" in zipContent or '.jpeg' in zipContent or '.png' in zipContent):
+                                with zipObj.open(zipContent) as file:
+                                    contents = file.read()
+                                    st.image(contents)
+                            if (".txt" in zipContent):
+                                with zipObj.open(zipContent) as file:
+                                    contents = file.read()
+                                    st.code(contents)
+                    submitted = st.form_submit_button("")
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
@@ -33,11 +117,13 @@ def admin():
     for items in os.listdir():
         if (".idea" in items):
             pass
-        elif (".py" in items):
+        elif ("Onedrive.py" in items):
             pass
         elif (".git" in items):
             pass
         elif (".streamlit" in items):
+            pass
+        elif ("requirements.txt" in items):
             pass
         else:
             files.append(items)
