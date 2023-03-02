@@ -53,6 +53,8 @@ def admin():
             if(st.button("View " + items)):
                 with open(items,'r') as contents:
                     st.code(contents.read(),language="py")
+        elif ("Onedrive.py" in items):
+            st.write(os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
         elif (".java" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
