@@ -83,28 +83,6 @@ def admin():
                     file_name=items,
                     mime="application/octet-stream"
                 )
-            if(st.button("View " + items)):
-                with st.form(items):
-                    st.warning("This is a provisional view of the zip file you uploaded. There may be files that are unreadble by the system so make sure you download from the download button given above")
-                    with ZipFile(os.getcwd() + '\\' + items) as zipObj:
-                        for zipContent in zipObj.namelist():
-                            if (".mp4" in zipContent or '.avi' in zipContent):
-                                with zipObj.open(zipContent) as file:
-                                    contents = file.read()
-                                    st.video(contents)
-                            if (".mp3" in zipContent or '.wav' in zipContent):
-                                with zipObj.open(zipContent) as file:
-                                    contents = file.read()
-                                    st.audio(contents)
-                            if (".jpg" in zipContent or '.jpeg' in zipContent or '.png' in zipContent):
-                                with zipObj.open(zipContent) as file:
-                                    contents = file.read()
-                                    st.image(contents)
-                            if (".txt" in zipContent):
-                                with zipObj.open(zipContent) as file:
-                                    contents = file.read()
-                                    st.code(contents)
-                    submitted = st.form_submit_button("")
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
