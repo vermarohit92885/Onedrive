@@ -23,13 +23,31 @@ def admin():
         elif(".streamlit" in items):
             st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
         elif(".mp4" in items or '.avi' in items):
-            st.write(items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
             st.video(items)
         elif (".mp3" in items or '.wav' in items):
-            st.write(items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
             st.audio(items)
         elif (".jpg" in items or '.jpeg' in items or '.png' in items):
-            st.write(items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
             st.image(items)
         elif (".txt" in items):
             with open(items, "rb") as file:
