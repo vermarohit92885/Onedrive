@@ -1,3 +1,4 @@
 firebase_admin==6.4.0
 streamlit==1.17.0
+streamlit_pdf_viewer==0.0.8
 protobuf~=3.19.0
