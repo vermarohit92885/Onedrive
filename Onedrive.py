@@ -1,8 +1,16 @@
+import base64
+import firebase_admin
+from firebase_admin import credentials,db
 import streamlit as st
-from zipfile import ZipFile
 import os
 
+if not firebase_admin._apps:
+    cred = credentials.Certificate("credentials.json")
+    firebase_admin.initialize_app(cred,{"databaseURL":"https://onedrive-12e98-default-rtdb.firebaseio.com/"})
+
 st.set_page_config(page_title='Onedrive',layout="wide",page_icon="https://iconarchive.com/download/i87068/graphicloads/colorful-long-shadow/Cloud.ico")
+
+ref = db.reference("/")
 
 hide_streamlit_style = """
                 <style>
@@ -22,6 +30,10 @@ def admin():
             st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
         elif(".streamlit" in items):
             st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
+        elif ("Onedrive.py" in items):
+            st.write(os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+        elif ("credentials.json" in items):
+            st.write(os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
         elif(".mp4" in items or '.avi' in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
@@ -71,8 +83,17 @@ def admin():
             if(st.button("View " + items)):
                 with open(items,'r') as contents:
                     st.code(contents.read(),language="py")
-        elif ("Onedrive.py" in items):
-            st.write(os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+        elif (".json" in items and 'credentials.json' not in items):
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
+            if(st.button("View " + items)):
+                with open(items,'r') as contents:
+                    st.code(contents.read(),language="py")
         elif (".java" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
@@ -95,7 +116,7 @@ def admin():
             if(st.button("View " + items)):
                 with open(items,'r') as contents:
                     st.code(contents.read(),language="html")
-        elif(".zip" in items):
+        elif (".pdf" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
                     label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
@@ -103,6 +124,16 @@ def admin():
                     file_name=items,
                     mime="application/octet-stream"
                 )
+            if(st.button("View " + items)):
+                # Opening file from file path
+                with open(items, "rb") as f:
+                    base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+
+                # Embedding PDF in HTML
+                pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+
+                # Displaying File
+                st.markdown(pdf_display, unsafe_allow_html=True)
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
@@ -122,6 +153,8 @@ def admin():
         elif (".streamlit" in items):
             pass
         elif ("requirements.txt" in items):
+            pass
+        elif ("credentials.json" in items):
             pass
         else:
             files.append(items)
@@ -156,10 +189,10 @@ if(st.button("Show files in drive")):
 st.sidebar.header("Admin Portal")
 id = st.sidebar.text_input(label="Username")
 password = hash(st.sidebar.text_input(label="Password",type="password"))
-true_password = hash("PassFile@2023#")
+true_password = hash(ref.get()['Password'])
 if(password and id):
-    if(password == true_password):
-        st.sidebar.success("Logged in as admin")
+    if(password == true_password and id == ref.get()['Id']):
+        st.sidebar.success("Welcome "+ref.get()['Id'])
         with st.expander("Admin"):
             admin()
     else:
