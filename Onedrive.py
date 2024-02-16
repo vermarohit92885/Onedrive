@@ -2,6 +2,7 @@ import base64
 import firebase_admin
 from firebase_admin import credentials,db
 import streamlit as st
+from streamlit_pdf_viewer import pdf_viewer
 import os
 
 if not firebase_admin._apps:
@@ -125,15 +126,7 @@ def admin():
                     mime="application/octet-stream"
                 )
             if(st.button("View " + items)):
-                # Opening file from file path
-                with open(items, "rb") as f:
-                    base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-
-                # Embedding PDF in HTML
-                pdf_display = F'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
-
-                # Displaying File
-                st.markdown(pdf_display, unsafe_allow_html=True)
+                pdf_viewer(items)
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
