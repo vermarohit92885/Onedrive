@@ -185,7 +185,7 @@ password = hash(st.sidebar.text_input(label="Password",type="password"))
 forget_password = st.sidebar.write("[Forget Password](https://onedrive-12e98-default-rtdb.firebaseio.com/)")
 true_password = hash(ref.get()['Password'])
 if(password and id):
-    if(password == true_password and id == ref.get()['Id']):
+    if(password == true_password and ref.get()['Id'].lower() in id.lower()):
         st.sidebar.success("Welcome "+ref.get()['Id'])
         with st.expander("Admin"):
             admin()
