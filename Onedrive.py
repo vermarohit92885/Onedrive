@@ -106,6 +106,17 @@ def admin():
             if(st.button("View " + items)):
                 with open(items,'r') as contents:
                     st.code(contents.read(),language="java")
+        elif (".c" in items or ".cpp" in items or ".ino" in items):
+            with open(items, "rb") as file:
+                btn = st.download_button(
+                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    data=file,
+                    file_name=items,
+                    mime="application/octet-stream"
+                )
+            if (st.button("View " + items)):
+                with open(items, 'r') as contents:
+                    st.code(contents.read(), language="c")
         elif (".html" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
