@@ -23,22 +23,35 @@ hide_streamlit_style = """
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+def KBMBGB(filesize):
+    return_val = str(round(filesize,2)) + " B"
+    if (filesize >= 1000):
+        filesize = filesize / 1024
+        return_val =  str(round(filesize,2)) + " KB"
+    if(filesize >= 1000):
+        filesize = filesize/1024
+        return_val = str(round(filesize,2)) + " MB"
+    if (filesize >= 1000):
+        filesize = filesize / 1024
+        return_val = str(round(filesize,2)) + " GB"
+    return return_val
+
 def admin():
     for items in os.listdir():
         if(".idea" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")")
         elif(".git" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")")
         elif(".streamlit" in items):
-            st.write(os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)")
+            st.write(os.getcwd() + '\\' + items  + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")")
         elif ("Onedrive.py" in items):
-            st.write(os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+            st.write(os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")")
         elif ("credentials.json" in items):
-            st.write(os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)")
+            st.write(os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")")
         elif(".mp4" in items or '.avi' in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -47,7 +60,7 @@ def admin():
         elif (".mp3" in items or '.wav' in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -56,7 +69,7 @@ def admin():
         elif (".jpg" in items or '.jpeg' in items or '.png' in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -65,7 +78,7 @@ def admin():
         elif (".txt" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -76,7 +89,7 @@ def admin():
         elif (".py" in items and 'Onedrive.py' not in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -87,7 +100,7 @@ def admin():
         elif (".json" in items and 'credentials.json' not in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -98,7 +111,7 @@ def admin():
         elif (".java" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -109,7 +122,7 @@ def admin():
         elif (".c" in items or ".cpp" in items or ".ino" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -120,7 +133,7 @@ def admin():
         elif (".html" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -131,7 +144,7 @@ def admin():
         elif (".pdf" in items):
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items + " (" + f'{round(os.stat(items).st_size / 1024, 2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -141,7 +154,7 @@ def admin():
         else:
             with open(items, "rb") as file:
                 btn = st.download_button(
-                    label=os.getcwd() + '\\' + items  + " (" + f'{round(os.stat(items).st_size / 1024,2)}' + " KB)",
+                    label=os.getcwd() + '\\' + items  + " (" + f'{KBMBGB(os.stat(items).st_size)}' + ")",
                     data=file,
                     file_name=items,
                     mime="application/octet-stream"
@@ -173,20 +186,23 @@ def admin():
 st.header("Onedrive")
 size = 0
 for item in os.listdir():
-    size += os.stat(item).st_size / (1024 * 1024)
-st.subheader(f'{round(800 - size,2)}' + " MB remaining")
+    size += os.stat(item).st_size
+remsize = 838860800-size
+st.subheader(f'{KBMBGB(remsize)}' + " remaining")
 st.write("---")
 files = st.file_uploader("Upload your files to drive",accept_multiple_files=True)
+file_size = 0
 if(files):
     for file in files:
-        if(file.size / (1024*1024) < round(800-size,2)):
+        if(file.size < (remsize-file_size)):
             with open(file.name,"wb") as f:
                 f.write(file.read())
-            size += file.size / (1024*1024)
+            file_size += file.size
         else:
             st.error("You have crossed your storage limit")
-    st.write("Total Size: " + str(size))
-    st.subheader(f'{round(800 - size, 2)}' + " MB remaining")
+    st.write("Total Size: " + str(KBMBGB(file_size)))
+    remsize = 838860800 - file_size
+    st.subheader(f'{KBMBGB(remsize)}' + " remaining")
 if(st.button("Show files in drive")):
     for items in os.listdir():
         st.write(os.getcwd() + "\\" + items)
