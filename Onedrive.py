@@ -207,14 +207,18 @@ if(st.button("Show files in drive")):
     for items in os.listdir():
         st.write(os.getcwd() + "\\" + items)
 st.sidebar.header("Admin Portal")
-id = st.sidebar.text_input(label="Username")
+id = st.sidebar.text_input(label="Username").lower()
+true_id = ref.get()['Id'].lower()
 password = hash(st.sidebar.text_input(label="Password",type="password"))
 forget_password = st.sidebar.write("[Forget Password](https://onedrive-12e98-default-rtdb.firebaseio.com/)")
 true_password = hash(ref.get()['Password'])
 if(password and id):
-    if(password == true_password and ref.get()['Id'].lower() in id.lower()):
+    if(password == true_password and id in true_id):
         st.sidebar.success("Welcome "+ref.get()['Id'])
         with st.expander("Admin"):
             admin()
     else:
-        st.sidebar.error("Incorrect password")
+        if(password != true_password):
+            st.sidebar.error("Incorrect password")
+        elif(id != true_id):
+            st.sidebar.error("User id does'nt exist contact Admin")
